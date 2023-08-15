@@ -85,7 +85,7 @@ No assistance was provided for labeling the needles on TRUS images, therefore we
 # Methodology 
 
 <p align="center">
-    <img src="figures/big_picture_updated.png" width="75%">
+    <img src="figures/big_picture.png" width="75%">
 </p> 
 
 As you see in the big picture, image frames are received from the US device by a frame grabber, which is an analog-to-digital converter (ADC). Audio is read by a separate microphone and processed for biopsy shout sound detection. After synchronization, the US images are fed to needle tip localization models. The result is saved. Ideally, the result is sent back to the US device for documentation step, but this last step is not implemented. 
