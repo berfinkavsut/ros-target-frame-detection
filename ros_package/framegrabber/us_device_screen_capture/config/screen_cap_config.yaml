@@ -1,0 +1,16 @@
+# Crop the US image
+# Captured screen image has the ratio of 3:4.
+frame_cropped_coordinates:  
+  x0: 960 
+  x1: 1680
+  y0: 0  
+  y1: 1080 
+
+# Frame sizes are dependent on the captured screen. 
+frame_size:
+  height: 1080 
+  width: 1920 
+  
+# Frame grabber index is 2.
+# Camera device index is -1/0/1. 
+video_index: 2

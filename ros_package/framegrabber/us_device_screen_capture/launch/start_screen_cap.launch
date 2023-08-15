@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<launch>
+  <node name="frame_capture_node" pkg="us_dev_screen_capture" type="frame_capture.py" output="screen" required="true" />
+   <node name="audio_publisher_node" pkg="us_dev_screen_capture" type="audio_publisher.py" output="screen" required="true" />
+   <node name="target_frame_detection_node" pkg="us_dev_screen_capture" type="target_frame_detection.py" output="screen" required="true" />
+</launch>
