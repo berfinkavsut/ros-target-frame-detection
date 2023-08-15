@@ -2,9 +2,7 @@
 
 _Master-Praktikum - Computational Surgineering, Winter Semester 2022/23, Technical University of Munich_ 
 
-_Target Frame Detection_ project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of the "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued with an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. _Needle Tip Localization_ was proposed as future work in the previous IDP. In this project, I worked with Marta Gomar Chulián and Zichen Zhang. We implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, who is our project tutor. My contribution is in the **online acoustic-based target frame detection** part, hence you can see only that part in this GitHub repo. 
-
-The aim of _Needle Tip Localization_ project is to find the needle tip coordinates when the prostate biopsy is taken. During the surgery, an assistant is marking the needle tips on the US screen by waiting for the biopsy shots, and he/she does not have any other job to do. If we could mark the needle tips automatically, there would not be any need for an additional assistant in the OR. Our proposed solution is to save the needle tip coordinates on the US images by image processing. Our motivation is to have fewer people in the OR and avoid human errors. According to Dr. Matthias Jahnen, it takes 50-60 surgeries to get enough experience for an urologist. During training, we believe that acquiring the needle tip positions will be important for new doctors to check whether they could hit the targeted prostate regions or not.   
+_Target Frame Detection_ project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of the "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued as an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. _Needle Tip Localization_ was proposed as future work in the previous IDP. In this project, my group members are Marta Gomar Chulián and Zichen Zhang. We implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, who is our project tutor. My contribution is in the **online acoustic-based target frame detection** part, hence you can see only that part in this GitHub repo. 
 
 Our project has two main parts: acoustic-based target frame detection and needle tip localization. 
 
@@ -19,12 +17,6 @@ needles or not. After classification, images containing needles are preserved,
 then we apply our segmentation model to them to segment the needles to retrieve
 the needle tip position in height coordinate. In the localization part, further
 post-processing methods are applied to obtain the predicted 2D needle tip position.
-
-# OR visits  
-
-At the beginning of the project, we had two OR visits at the Department of Urology in Klinikum rechts der Isar der TUM. We met with Dr. Jahnen as a group, observed the prostate biopsy surgery procedure, asked our questions, and asked for video recordings during the surgery. He said they are using [Canon Medical’s MRI/US fusion-guided biopsy set-up](https://at.medical.canon/wp-content/uploads/sites/18/2020/11/DC_Clinical-value-of-multi-parametric-ultrasound-and-MRI-US-fusion-guided-biopsy-for-prostate-cancer-detection-and-visualization.pdf) right now, and it was possible to record videos from the US device. We got our biopsy videos from the dates of 23.11.2022 and 01.12.2022 when we had our OR visits. 
-
-During our visits, Dr. Jahnen said that he did not need to see the computed needle tip on the screen, since he knows where the needle will reach to by experience. Shooting the targeted region is not a hard job for an experienced doctor. However, he said this information was needed for documentation purposes. Moreover, it can be used for training new doctors later. 
 
 ## Clinical Workflow 
 
@@ -48,9 +40,9 @@ marked tip coordinates are saved for documentation.
     <img src="figures/clinical_workflow_2.png" width="75%">
 </p>
 
-After the surgery, the doctor can see the 3D-MRI image of prostate. 
+After the surgery, the doctor can see the 3D-MRI image of the prostate. 
 Firstly, he segments the prostate by selecting some points on the contours
-of the prostate region on 2D slice images (coronal, sagital, and 
+of the prostate region on 2D slice images (coronal, sagittal, and 
 horizontal). Lastly, the biopsy positions can be seen on the 3D prostate
 volume. This is a self-check for the doctor to see how successful was the prostate biopsy surgery.
 This can also be given to the patient as a report. 
@@ -58,16 +50,10 @@ This can also be given to the patient as a report.
 <p align="center">
     <img src="figures/clinical_workflow_3.png" width="75%">
 </p>
- 
-# Data 
 
-When we started the project, we had surgery videos and their audio files from the previous IDP. Available audio files were recorded by a smart phone, Xiaomi Redmi 9, approximately 3 meters away from the patient. Their quality was good enough to hear the biopsy shots. We could not take any audio recording in the OR visits due to data privacy issues, therefore we used the old audio files in our demo by editing the biopsy videos. 
+# Data
 
-Old videos had image resolution of 950x540, which was not high enough for image processing. For this reason, we created a new dataset with image resolution of 1280x960. Temporal resolution was 30 frames per second (fps) for both cases. 
-
-## Data Preparation
-
-DICOM files per each surgery were exported from the US device. DICOM files were converted to videos as AVI format. The exported videos were not non-stop videos and some of them did not have biopsy shots. Firstly, we discarded the videos having no biopsy shot, and then cropped the videos such that each video has exactly one biopsy shot. Here, you can see the available label folders from two days. 
+DICOM files per each surgery were exported from the US device. DICOM files were converted to videos as AVI format. The exported videos were not non-stop videos and some of them did not have biopsy shots. Firstly, we discarded the videos having no biopsy shot and then cropped the videos such that each video has exactly one biopsy shot. Here, you can see the available label folders from two days. 
 
     labels
     └──20221125    # day 1 
@@ -78,9 +64,11 @@ DICOM files per each surgery were exported from the US device. DICOM files were 
     └──20221201    # day 2
         └──125708         # surgery 1 
 
-No assistance was provided for labeling the needles on TRUS images, therefore we had to label the frames using a medical image software program. [ImFusion Suite](https://www.imfusion.com/products/imfusion-suite) program was used to create needle segmentation labels. For each biopsy shot, biopsy needle was present in around 15-20 frames. 
+No assistance was provided for labeling the needles on TRUS images, therefore we had to label the frames using a medical image software program. [ImFusion Suite](https://www.imfusion.com/products/imfusion-suite) program was used to create needle segmentation labels. For each biopsy shot, the biopsy needle was present in around 15-20 frames. 
 
-<img src="figures/labeling.png" width="75%">
+<p align="center">
+    <img src="figures/labeling.png" width="75%">
+</p> 
 
 # Methodology 
 
@@ -88,27 +76,29 @@ No assistance was provided for labeling the needles on TRUS images, therefore we
     <img src="figures/big_picture.png" width="75%">
 </p> 
 
-As you see in the big picture, image frames are received from the US device by a frame grabber, which is an analog-to-digital converter (ADC). Audio is read by a separate microphone and processed for biopsy shout sound detection. After synchronization, the US images are fed to needle tip localization models. The result is saved. Ideally, the result is sent back to the US device for documentation step, but this last step is not implemented. 
+As you see in the big picture, image frames are received from the US device by a frame grabber, which is an analog-to-digital converter (ADC). Audio is read by a separate microphone and processed for biopsy shout sound detection. After synchronization, the US images are fed to needle tip localization models. The result is saved. Ideally, the result is sent back to the US device for the documentation step, but this last step is not implemented. 
 
 * System Requirements 
     * Python version: Python 3.7, required Python packages are listed in [requirement.txt](requirements.txt).
     * ROS:            ROS Noetic (not supported by Ubuntu 22)
     * OS:             Only Ubuntu 20.04, not supported by Windows. 
     * Frame grabber:  Magewell UB Capture HDMI Plus
-    * Microphone:     Built-in microphone of computer 
+    * Microphone:     Built-in microphone of the computer 
     * Memory usage:   25.18 MB (except for saved shot folders)
 
 ## Acoustic-based Target Frame Detection
 
 The computer is connected to the US device to capture frames from the US screen. Saving all of the captured frames is not memory-efficient. 30 frames are captured per second during approximately _10 minutes_, which makes 18000 frames in total. One cropped frame allocates 212 KB on the disc, so it makes 3.64 GB at the end for one surgery. More importantly, it is computationally demanding for our needle tip localization model to process all of the frames. 
 
-As a solution, target frame detection was proposed in the previous IDP. If we take the frames which are only around the biopsy shot sound, they are going to be enough for the needle detection models and the system will be memory- and computationally-efficient. Audio and frame files are captured in parallel by using ROS. By online audio processing, the biopsy shot times are determined by the audio peak detection method, and only the frames around this peak time are saved inside some separate shot folders. 
+As a solution, target frame detection was proposed in the previous IDP. If we take the frames which are only around the biopsy shot sound, they are going to be enough for the needle detection models and the system will be memory- and computationally efficient. Audio and frame files are captured in parallel by using ROS. By online audio processing, the biopsy shot times are determined by the audio peak detection method, and only the frames around this peak time are saved inside some separate shot folders. 
 
 ### ROS
 
 Before this project, any of us did not have experience with ROS before. Firstly, we followed the [ROS tutorials](http://wiki.ros.org/ROS/Tutorials) from their official website. Later, we started to work on the ROS package "frame grabber",  which was provided by our tutor.  
 
-<img src="figures/rosgraph.png" width = "50%"> 
+<p align="center">
+    <img src="figures/rosgraph.png" width = "50%"> 
+</p>
 
 There are 3 ROS nodes in the ROS package: `frame_capture_node`, `audio_publisher_node`, and `target_frame_detection_node`. `audio_publisher_node` is a Publisher node, `target_frame_detection_node` is a Subscriber node, and they are connected to the topic `audio`. 
 
@@ -133,15 +123,16 @@ Maximum biopsy shot duration is assumed to be 1 second. Each audio file is store
     <img src="figures/onlinecapture_diagrams1.png" width="100%">
 </p>
 
-Memory usage of audio capture: 3 audio files are saved when the audio processing starts, and the 4th audio file is being saved. 1 audio file allocates 88.1 KB space on the disc, which makes 4 x 88.1 KB = 352.4 KB.
+Memory usage of audio capture: 3 audio files are saved when the audio processing starts and the 4th audio file is saved. 1 audio file allocates 88.1 KB of space on the disc, which makes 4 x 88.1 KB = 352.4 KB.
 
-Memory usage of frame capture: 3 audio files correspond to 3 seconds for image frames, and the image frames of the 4th second are being saved. 1 image frame allocates 212 KB space in the disc, then it makes maximum 30 x 4 x 212 KB = 24.84 MB.  
+Memory usage of frame capture: 3 audio files correspond to 3 seconds for image frames, and the image frames of the 4th second are being saved. 1 image frame allocates 212 KB space in the disc, then it makes a maximum 30 x 4 x 212 KB = 24.84 MB.  
 
-Note: The possible offsets of captured frames and audio files due to hardware delays are ignored, since we did not observe any severe problem during this project. When there is any audio/frame capture offset, the start and end times of the time interval can be adjusted by this observed offset time. 
+Note: The possible offsets of captured frames and audio files due to hardware delays are ignored, since we did not observe any severe problems during this project. When there is any audio/frame capture offset, the start and end times of the time interval can be adjusted by this observed offset time. 
 
 ### Online Audio Detection 
 
-[PyAudio](https://pypi.org/project/PyAudio/) library is used for online audio processing instead of [librosa](https://librosa.org/blog/2019/07/29/stream-processing/), which was used in the previous IDP, since librosa does not support online audio processing. PyAudio provides Python bindings for PortAudio, which is the cross-platform, audio I/O library. 
+[PyAudio](https://pypi.org/project/PyAudio/) library is used for online audio processing. 
+PyAudio provides Python bindings for PortAudio, which is the cross-platform, audio I/O library. 
 <!-- https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio-documentation -->
 
 One needs to configure the stream parameters for audio processing. 
@@ -156,13 +147,14 @@ Configuration of the stream parameters:
 
 #### Biopsy Sound Detection Method 
 
-In the previous IDP, gradient method was proposed as the last decision to detect peak sounds. There are two derivative methods to use: `grad_1` and `grad_4`. It was stated that 4th derivative method was expected to perform better as literature review suggested, but in practice 1st derivative was better. We also observed the same situation, and therefore `grad_1` is used in the gradient peak detection method. The user can add also other peak detection methods to [audio_peak_detectors.py](ros_package/framegrabber/us_device_screen_capture/src/audio_peak_detectors.py). We did not focus on the development of peak detection methods, since it was out of this project's scope. 
+In the previous IDP, the gradient method was proposed as the last decision to detect peak sounds. There are two derivative methods to use: `grad_1` and `grad_4`. It was stated that the 4th derivative method was expected to perform better as the literature review suggested, but in practice 1st derivative was better. We also observed the same situation, and therefore `grad_1` is used in the gradient peak detection method. The user can add also other peak detection methods to [audio_peak_detectors.py](ros_package/framegrabber/us_device_screen_capture/src/audio_peak_detectors.py). We did not focus on the development of peak detection methods, since it was out of this project's scope. 
 
 ### Online Frame Capture 
 
-Firstly, we started to work with the frame grabber [Epiphan DVI2USB 3.0](https://www.epiphan.com/products/dvi2usb-3-0/tech-specs/). This frame grabber was taken from the US device in the CAMP Chair at the Garching campus. We encountered the problem that this frame grabber was not supported by Linux OS anymore, but only Windows. We needed to work on Ubuntu 20, since ROS Noetics did not have the OS support with Windows. Hence, we changed our frame grabber to [Magewell UB Capture HDMI Plus](https://www.magewell.com/products/usb-capture-hdmi-plus). It supports capture resolutions up to 2048 x 2160 and frame rate up to 120 fps, which satisfies our specifications with the US device. This frame grabber was taken from the IFL Lab at TUM Klinikum rechts der Isar. We went to the IFL lab each time to work with the frame grabber and to have discussion meetings with our tutor. 
+We worked on Ubuntu 20 since ROS Noetics did not have OS support with Windows. We used the frame grabber to [Magewell UB Capture HDMI Plus](https://www.magewell.com/products/usb-capture-hdmi-plus), which was also compatible with Ubuntu 20. It supports capture resolutions up to 2048 x 2160 and a frame rate of up to 120 fps, which satisfies our specifications with the US device. This frame grabber was taken from the IFL Lab at TUM Klinikum rechts der Isar. We went to the IFL lab each time to work with the frame grabber and to have discussion meetings with our tutor. 
 
-OpenCV library is used to capture the US device screen by using frame grabber. Frame rate is set to 30 fps in our code, since the videos from the surgeries had also frame rate of 30 fps in DICOM files. The user needs to set the screen capture configurations from [screen_cap_config.yaml](ros_package/framegrabber/us_device_screen_capture/config/screen_cap_config.yaml). Frame resolution is set to 1920 x 1080 (width x height). The cropped frame coordinates are set so as to crop the US image by discarding the MRI image. The blank parts are also discarded from the left and right sides. Their resolution is 720 x 1080.
+OpenCV library is used to capture the US device screen by using a frame grabber. Frame rate is set to 30 fps in our code since the videos from the surgeries had also a frame rate of 30 fps in DICOM files. The user needs to set the screen capture configurations from [screen_cap_config.yaml](ros_package/framegrabber/us_device_screen_capture/config/screen_cap_config.yaml). Frame resolution is set to 1920 x 1080 (width x height). The cropped frame coordinates are set so as to crop the US image by discarding the MRI image. The blank parts are also discarded from the left and right sides. Their resolution is 720 x 1080.
+
 # Demo 
 
 The left-side laptop is capturing frames from the right-side laptop, which is simulating 
