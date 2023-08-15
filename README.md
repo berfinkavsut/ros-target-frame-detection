@@ -78,13 +78,13 @@ No assistance was provided for labeling the needles on TRUS images, therefore we
 
 As you see in the big picture, image frames are received from the US device by a frame grabber, which is an analog-to-digital converter (ADC). Audio is read by a separate microphone and processed for biopsy shout sound detection. After synchronization, the US images are fed to needle tip localization models. The result is saved. Ideally, the result is sent back to the US device for the documentation step, but this last step is not implemented. 
 
-* System Requirements 
-    * Python version: Python 3.7, required Python packages are listed in [requirement.txt](requirements.txt).
-    * ROS:            ROS Noetic (not supported by Ubuntu 22)
-    * OS:             Only Ubuntu 20.04, not supported by Windows. 
-    * Frame grabber:  Magewell UB Capture HDMI Plus
-    * Microphone:     Built-in microphone of the computer 
-    * Memory usage:   25.18 MB (except for saved shot folders)
+**System Requirements**
+* Python version: Python 3.7, required Python packages are listed in [requirement.txt](requirements.txt).
+* ROS:            ROS Noetic (not supported by Ubuntu 22)
+* OS:             Only Ubuntu 20.04, not supported by Windows. 
+* Frame grabber:  Magewell UB Capture HDMI Plus
+* Microphone:     Built-in microphone of the computer 
+* Memory usage:   25.18 MB (except for saved shot folders)
 
 ## Acoustic-based Target Frame Detection
 
