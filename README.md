@@ -2,7 +2,7 @@
 
 _Master-Praktikum - Computational Surgineering, Winter Semester 2022/23, Technical University of Munich_ 
 
-_Target Frame Detection_ project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of the "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued as an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. _Needle Tip Localization_ was proposed as future work in the previous IDP. In this project, my group members are Marta Gomar Chulián and Zichen Zhang. We implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, who is our project tutor. My contribution is in the **online acoustic-based target frame detection** part, hence you can see only that part in this GitHub repo. 
+_Target Frame Detection_ project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of the "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued as an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. _Needle Tip Localization_ was proposed as future work in the previous IDP. In this project, my group members are Marta Gomar Chulián and Zichen Zhang. We implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, who is our project tutor. My contribution was in the **online acoustic-based target frame detection** part besides common tasks including data preparation, OR visits to analyze clinical workflow, and preparing a demo. You can see the parts that I contributed to in this GitHub repo. 
 
 Our project has two main parts: acoustic-based target frame detection and needle tip localization. 
 
@@ -18,7 +18,7 @@ then we apply our segmentation model to them to segment the needles to retrieve
 the needle tip position in height coordinate. In the localization part, further
 post-processing methods are applied to obtain the predicted 2D needle tip position.
 
-## Clinical Workflow 
+# Clinical Workflow 
 
 In the pre-operative procedure, MRI images are loaded into the US device.
 Regions of interest (ROI) are marked manually by the doctor. At the beginning of the 
@@ -90,7 +90,7 @@ As you see in the big picture, image frames are received from the US device by a
 
 The computer is connected to the US device to capture frames from the US screen. Saving all of the captured frames is not memory-efficient. 30 frames are captured per second during approximately _10 minutes_, which makes 18000 frames in total. One cropped frame allocates 212 KB on the disc, so it makes 3.64 GB at the end for one surgery. More importantly, it is computationally demanding for our needle tip localization model to process all of the frames. 
 
-As a solution, target frame detection was proposed in the previous IDP. If we take the frames which are only around the biopsy shot sound, they are going to be enough for the needle detection models and the system will be memory- and computationally efficient. Audio and frame files are captured in parallel by using ROS. By online audio processing, the biopsy shot times are determined by the audio peak detection method, and only the frames around this peak time are saved inside some separate shot folders. 
+As a solution, target frame detection was proposed before. If we take the frames which are only around the biopsy shot sound, they are going to be enough for the needle detection models and the system will be memory- and computationally efficient. Audio and frame files are captured in parallel by using ROS. By online audio processing, the biopsy shot times are determined by the audio peak detection method, and only the frames around this peak time are saved inside some separate shot folders. 
 
 ### ROS
 
@@ -113,11 +113,11 @@ roslaunch us_dev_screen_capture start_screen_cap.launch
 
 * `audio_publisher_node`: Capturing and saving the audio files as WAV files with their timestamps inside "Audio Data" folder, and publishing the audio filenames as `String` messages to the topic `audio`. Timestamps are again taken from the global ROS clock and saved similarly. 
 
-* `target_frame_detection_node`: Subscribing the audio filenames, which are `String` messages, from the topic `audio`. The WAV files are processed to detect whether any biopsy shot occured. If any biopsy shot was detected, the target frames are moved to another "shot" subfolder inside "Biopsy Data" folder. Old audio files and image frames are deleted. Synchronization between audio and frames are guarenteed by the timestamps of audio files and image frames. 
+* `target_frame_detection_node`: Subscribing the audio filenames, which are `String` messages, from the topic `audio`. The WAV files are processed to detect whether any biopsy shot occured. If any biopsy shot was detected, the target frames are moved to another "shot" subfolder inside "Biopsy Data" folder. Old audio files and image frames are deleted. Synchronization between audio and frames are guaranteed by the timestamps of audio files and image frames. 
 
-Audio-frame synchronization is implemented by the topic "audio". Our approach is to save the audio files and image frames from the previous 3 seconds, and delete them after target frame detection is over. In each iteration, 3 audio files exist and only the first 2 audio files are processed. We are processing only the first 2 audio files, since if we detect the peak at the end of the 2nd audio file, then it means we would need the frames around the biopsy shot time. These frames would correspond to the frames that we capture at the same time with the 3rd audio file. Therefore, we do not process the 3rd audio file, but just to keep it to have the necessary frames with the correspoding timestamp. 
+Audio-frame synchronization is implemented by the topic "audio". Our approach is to save the audio files and image frames from the previous 3 seconds, and delete them after target frame detection is over. In each iteration, 3 audio files exist and only the first 2 audio files are processed. We are processing only the first 2 audio files, since if we detect the peak at the end of the 2nd audio file, then it means we would need the frames around the biopsy shot time. These frames would correspond to the frames that we capture at the same time with the 3rd audio file. Therefore, we do not process the 3rd audio file, but just to keep it to have the necessary frames with the corresponding timestamp. 
 
-Maximum biopsy shot duration is assumed to be 1 second. Each audio file is stored with the time step of 1 second. The reading of the audio files is done for the last 1.5 seconds out of the 2 seconds of the processed audio files. With this sliding winddow approach, it is ensured that the peak time will not be missed in between the starting and end times of the audio files. Besides, in case the peak is detected, the following iteration will be skipped not to detect it twice.  
+The maximum biopsy shot duration is assumed to be 1 second. Each audio file is stored with the time step of 1 second. The reading of the audio files is done for the last 1.5 seconds out of the 2 seconds of the processed audio files. With this sliding winddow approach, it is ensured that the peak time will not be missed in between the starting and end times of the audio files. Besides, in case the peak is detected, the following iteration will be skipped not to detect it twice.  
 
 <p align="center">
     <img src="figures/onlinecapture_diagrams1.png" width="100%">
@@ -125,7 +125,7 @@ Maximum biopsy shot duration is assumed to be 1 second. Each audio file is store
 
 Memory usage of audio capture: 3 audio files are saved when the audio processing starts and the 4th audio file is saved. 1 audio file allocates 88.1 KB of space on the disc, which makes 4 x 88.1 KB = 352.4 KB.
 
-Memory usage of frame capture: 3 audio files correspond to 3 seconds for image frames, and the image frames of the 4th second are being saved. 1 image frame allocates 212 KB space in the disc, then it makes a maximum 30 x 4 x 212 KB = 24.84 MB.  
+Memory usage of frame capture: 3 audio files correspond to 3 seconds for image frames, and the image frames of the 4th second are being saved. 1 image frame allocates 212 KB space in the disc, then it makes a maximum of 30 x 4 x 212 KB = 24.84 MB.  
 
 Note: The possible offsets of captured frames and audio files due to hardware delays are ignored, since we did not observe any severe problems during this project. When there is any audio/frame capture offset, the start and end times of the time interval can be adjusted by this observed offset time. 
 
@@ -140,18 +140,18 @@ One needs to configure the stream parameters for audio processing.
 Configuration of the stream parameters: 
 * `format`: Portaudio sample format
 * `channels`: channel numbers of the sound device, usually 1 or 2 
-* `rate`: sampling rate, also called as frame rate, usually 44100 or 48000 
+* `rate`: sampling rate, also called frame rate, usually 44100 or 48000 
 * `frames_per_buffer`: chunks sizes 
-* `input`: input mode, stream can capture online audio from the current input device (microphone)
-* `output` output mode, stream will be feeding to the current output device (speaker)  
+* `input`: input mode, the stream can capture online audio from the current input device (microphone)
+* `output` output mode, the stream will be fed to the current output device (speaker)  
 
 #### Biopsy Sound Detection Method 
 
-In the previous IDP, the gradient method was proposed as the last decision to detect peak sounds. There are two derivative methods to use: `grad_1` and `grad_4`. It was stated that the 4th derivative method was expected to perform better as the literature review suggested, but in practice 1st derivative was better. We also observed the same situation, and therefore `grad_1` is used in the gradient peak detection method. The user can add also other peak detection methods to [audio_peak_detectors.py](ros_package/framegrabber/us_device_screen_capture/src/audio_peak_detectors.py). We did not focus on the development of peak detection methods, since it was out of this project's scope. 
+There are two derivative methods to use: `grad_1` and `grad_4`. The 4th derivative method was expected to perform better as the literature review suggested, but in practice 1st derivative was better. Therefore, `grad_1` is used in the gradient peak detection method. The user can add also other peak detection methods to [audio_peak_detectors.py](ros_package/framegrabber/us_device_screen_capture/src/audio_peak_detectors.py). 
 
 ### Online Frame Capture 
 
-We worked on Ubuntu 20 since ROS Noetics did not have OS support with Windows. We used the frame grabber to [Magewell UB Capture HDMI Plus](https://www.magewell.com/products/usb-capture-hdmi-plus), which was also compatible with Ubuntu 20. It supports capture resolutions up to 2048 x 2160 and a frame rate of up to 120 fps, which satisfies our specifications with the US device. This frame grabber was taken from the IFL Lab at TUM Klinikum rechts der Isar. We went to the IFL lab each time to work with the frame grabber and to have discussion meetings with our tutor. 
+We worked on Ubuntu 20 since ROS Noetics did not have OS support with Windows. We used the frame grabber to [Magewell UB Capture HDMI Plus](https://www.magewell.com/products/usb-capture-hdmi-plus), which was also compatible with Ubuntu 20. It supports capture resolutions up to 2048 x 2160 and a frame rate of up to 120 fps, which satisfies our specifications with the US device. This frame grabber was taken from the IFL Lab at TUM Klinikum rechts der Isar. 
 
 OpenCV library is used to capture the US device screen by using a frame grabber. Frame rate is set to 30 fps in our code since the videos from the surgeries had also a frame rate of 30 fps in DICOM files. The user needs to set the screen capture configurations from [screen_cap_config.yaml](ros_package/framegrabber/us_device_screen_capture/config/screen_cap_config.yaml). Frame resolution is set to 1920 x 1080 (width x height). The cropped frame coordinates are set so as to crop the US image by discarding the MRI image. The blank parts are also discarded from the left and right sides. Their resolution is 720 x 1080.
 
