@@ -102,7 +102,7 @@ Before this project, any of us did not have experience with ROS before. Firstly,
     <img src="figures/rosgraph.png" width = "50%"> 
 </p>
 
-There are 3 ROS nodes in the ROS package: `frame_capture_node`, `audio_publisher_node`, and `target_frame_detection_node`. `audio_publisher_node` is a Publisher node, `target_frame_detection_node` is a Subscriber node, and they are connected to the topic `audio`. 
+There are 3 ROS nodes in the ROS package: `frame_capture_node`, `audio_publisher_node`, and `target_frame_detection_node`. `audio_publisher_node` is a Publisher node, `target_frame_detection_node` is a Subscriber node, and they are connected to the topic `audio`. Firstly, move `framegrabber` to `catkin_ws\src`, which is inside your workspace. 
 
 * Command to run the ROS package: 
 
