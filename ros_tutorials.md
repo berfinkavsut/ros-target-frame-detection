@@ -63,9 +63,9 @@ roscpp = c++ client library
     
     `rosmsg info std_msgs/Int16` 
     
-- **`roscore`** = ros+core : master (provides name service for ROS) + rosout (stdout/stderr) + parameter server (parameter server will be introduced later)
-- **`rosnode`** = ros+node : ROS tool to get information about a node.
-- **`rosrun`** = ros+run : runs a node from a given package.
+- **`roscore`** = ros+core, master (provides name service for ROS) + rosout (stdout/stderr) + parameter server (parameter server will be introduced later)
+- **`rosnode`** = ros+node, ROS tool to get information about a node.
+- **`rosrun`** = ros+run, runs a node from a given package.
 - **`roslaunch`:** tool for easily launching multiple ROS nodes locally and remotely via SSH, as well as setting parameters on the Parameter Server. It takes in one or more XML configuration files (with the .launch extension) that specify the parameters to set and nodes to launch, as well as the machines that they should be run on.
     
     Many ROS packages come with "launch files", which you can run with:
@@ -73,9 +73,9 @@ roscpp = c++ client library
     ```
     $ roslaunch package_name file.launch
     ```
-    
-
-![ros_tutorials](figures/ros_tutorials.png)
+<p align="center">
+    <img src="figures/ros_tutorials.png" width="50%">
+</p>
 
 **→ How to write publisher and subscriber?** 
 
@@ -84,9 +84,9 @@ rospy.init_node('listener', anonymous=True)
 -> data type should be imported as well
 
 rospy.Subscriber("chatter", String, callback) 
- -> 1. topic name - must be identical to the publisher topic 
- -> 2. data type 
- -> 3. callback functions are like running in the background
+    1. topic name - must be identical to the publisher's topic 
+    2. data type 
+    3. callback functions are like running in the background
 
 # spin() simply keeps python from exiting until this node is stopped
 rospy.spin()
@@ -104,7 +104,7 @@ You can also check your message types, check it later.
 
 1. [**Writing a Simple Publisher and Subscriber**](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29)
 
-Make Python scripts executable : `chmod +x talker.py` 
+Make Python scripts executable: `chmod +x talker.py` 
 
 **Publisher**
 
