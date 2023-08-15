@@ -1,12 +1,8 @@
-# Needle Tip Localization
+# Acoustic-Based Target Frame Detection
 
 _Master-Praktikum - Computational Surgineering, Winter Semester 2022/23, Technical University of Munich_ 
 
-- Marta Gomar Chulián
-- Berfin Kavsut 
-- Zichen Zhang 
-
-This project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued with an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. Needle tip localization was proposed as future work in the previous IDP. In our project, we implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, our project tutor.  
+_Needle Tip Localization_ project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of the "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued with an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. Needle tip localization was proposed as future work in the previous IDP. As a group, other members are Marta Gomar Chulián and Zichen Zhang, we implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, our project tutor. My contribution was in the online acoustic-based target frame detection part, hence you can see only that part in this GitHub repo. 
 
 The aim of our project is to find needle tip coordinates when the prostate biopsy is taken. During the surgery, an assistant is marking the needle tips on the US screen by waiting for the biopsy shots, and he/she does not have any other job to do. If we could mark the needle tips automatically, there would not be any need for an additional assistant in the OR. Our proposed solution is to save the needle tip coordinates on the US images by image processing. Our motivation is to have fewer people in the OR and avoid human errors. According to Dr. Matthias Jahnen, it takes 50-60 surgeries to get enough experience for an urologist. During training, we believe that acquiring the needle tip positions will be important for new doctors to check whether they could hit the targeted prostate regions or not.   
 
