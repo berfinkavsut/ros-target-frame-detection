@@ -1,6 +1,6 @@
 # ROS Tutorials
 
-1. [**Installing and Configuring Your ROS Environment**](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)
+## 1. [**Installing and Configuring Your ROS Environment**](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)
 - Create a ROS workspace
 
 ```jsx
@@ -12,7 +12,7 @@ $ catkin_make
 - Inside `.bashrc` file, add one line with `source devel/setup.bash`
 - Your environment is ready.
 
-1. [**Turtlesim tutorial**](http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem)
+## 2. [**Turtlesim tutorial**](http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem)
 
 ```bash
 rospack 
@@ -20,7 +20,7 @@ roscd
 rosls 
 ```
 
-1. [**Creating a ROS package**](http://wiki.ros.org/ROS/Tutorials/CreatingPackage) 
+## 3. [**Creating a ROS package**](http://wiki.ros.org/ROS/Tutorials/CreatingPackage) 
 
 ```bash
 $ cd catkin_ws/src
@@ -36,7 +36,7 @@ $ catkin_make
 $ rospack depends1 beginner_tutorials
 ```
 
-1. [**ROS Nodes**](http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes) 
+## 4. [**ROS Nodes**](http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes) 
 - **Nodes:** A node is an executable that uses ROS to communicate with other nodes. Two types of nodes are subscriber and publisher nodes. Make them executable before running the nodes.
 - **Messages:** ROS data type which is used when subscribing or publishing to a topic.
 - **Topics:** Nodes can publish messages to a topic as well as subscribe to a topic to receive messages.
@@ -77,7 +77,7 @@ roscpp = c++ client library
     <img src="figures/ros_tutorials.png" width="50%">
 </p>
 
-**→ How to write publisher and subscriber?** 
+## 5. **→ How to write publisher and subscriber?** 
 
 ```jsx
 rospy.init_node('listener', anonymous=True)
@@ -94,7 +94,7 @@ rospy.spin()
 
 You can also check your message types, check it later. 
 
-1. [**ROS Topics**](http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics)
+## 6. [**ROS Topics**](http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics)
 
 `rostopic list`
 
@@ -102,7 +102,7 @@ You can also check your message types, check it later.
 
 `rostopic info /frame_grabber/us_img` 
 
-1. [**Writing a Simple Publisher and Subscriber**](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29)
+## 7. [**Writing a Simple Publisher and Subscriber**](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29)
 
 Make Python scripts executable: `chmod +x talker.py` 
 
