@@ -77,7 +77,7 @@ roscpp = c++ client library
     <img src="figures/ros_tutorials.png" width="50%">
 </p>
 
-## 5. **→ How to write publisher and subscriber?** 
+## 5. How to write publisher and subscriber?** 
 
 ```jsx
 rospy.init_node('listener', anonymous=True)
