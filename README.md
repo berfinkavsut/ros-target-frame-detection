@@ -6,18 +6,18 @@ _Master-Praktikum - Computational Surgineering, Winter Semester 2022/23, Technic
 - Berfin Kavsut 
 - Zichen Zhang 
 
-This project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of "Image Guided Surgery" course offered by CAMP chair in the winter semester 2020/21. It was continued with an inderdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester 2021. The project scope was constrained to offline acoustic-based target frame detection. Needle tip localization was proposed as future work in the previous IDP. In our project, we have implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, our project tutor.  
+This project was first drafted by Sabrina Misatian, Vivian Sutedjo, and Viktoria Markova in the scope of "Image Guided Surgery" course offered by the CAMP chair in the winter semester of 2020/21. It was continued with an interdisciplinary project (IDP) by Viktoria Markova and Erekle Shishniashvili in the summer semester of 2021. The project scope was constrained to offline acoustic-based target frame detection. Needle tip localization was proposed as future work in the previous IDP. In our project, we implemented online acoustic-based target frame detection based on their ideas and continued to the needle tip localization task with the guidance of Yuan Bi, our project tutor.  
 
-The aim of our project is to find needle tip coordinates when prostate biopsy is taken. During the surgery, an assistant is marking the needle tips on the US screen by waiting for the biopsy shots, and he/she does not have any other job to do. If we could mark the needle tips automatically, there would not be any need for an additional assistant in the OR. Our proposed solution is to save the needle tip coordinates on the US images by image processing. Our motivation is to have less people in the OR and avoid human errors. According to Dr. Matthias Jahnen, it takes 50-60 surgeries to get enough experience for an urologist. During training, we believe that acquiring the needle tip positions will be important for new doctors to check whether they could hit the targeted prostate regions or not.   
+The aim of our project is to find needle tip coordinates when the prostate biopsy is taken. During the surgery, an assistant is marking the needle tips on the US screen by waiting for the biopsy shots, and he/she does not have any other job to do. If we could mark the needle tips automatically, there would not be any need for an additional assistant in the OR. Our proposed solution is to save the needle tip coordinates on the US images by image processing. Our motivation is to have fewer people in the OR and avoid human errors. According to Dr. Matthias Jahnen, it takes 50-60 surgeries to get enough experience for an urologist. During training, we believe that acquiring the needle tip positions will be important for new doctors to check whether they could hit the targeted prostate regions or not.   
 
 Our project has two main parts: acoustic-based target frame detection and needle tip localization. 
 
-**Acoustic-based target frame detection:** We know that each time the biopsy is taken, the biopsy shot produces a distinct, recognizable sound similar to an impulse sound. Target frames are the frames which are captured when that sound was detected. Here, the synchronization of audio and image frames is necessary to select the correct target frames. Synchronization is implemented by using [ROS](https://www.ros.org/) to have a global computer clock for audio and frame capture. Furthermore, it is possible to capture multiple sensor signals in parallel by ROS. 
+**Acoustic-based target frame detection:** We know that each time the biopsy is taken, the biopsy shot produces a distinct, recognizable sound similar to an impulse sound. Target frames are the frames that are captured when that sound was detected. Here, the synchronization of audio and image frames is necessary to select the correct target frames. Synchronization is implemented by using [ROS](https://www.ros.org/) to have a global computer clock for audio and frame capture. Furthermore, it is possible to capture multiple sensor signals in parallel by ROS. 
 
 **Needle tip localization:** We propose three major components:
 classification, segmentation, and localization. After the target frame detection
 part, images have been saved. However, some of them do not contain needles, which
-are of less importance and do not need to be performed needle tip localization.
+are of less importance, and do not need to be performed needle tip localization.
 Therefore, we use a dual classifier to classify the images whether they contain
 needles or not. After classification, images containing needles are preserved,
 then we apply our segmentation model to them to segment the needles to retrieve
@@ -26,13 +26,13 @@ post-processing methods are applied to obtain the predicted 2D needle tip positi
 
 # OR visits  
 
-At the beginning of the project, we had two OR visits at the Department of Urology in Klinikum rechts der Isar der TUM. We met with Dr. Jahnen as a group, observed the prostate biopsy surgery procedure, asked our questions and asked for video recordings during the surgery. He said they are using the [Canon Medical’s MRI/US fusion-guided biopsy set-up](https://at.medical.canon/wp-content/uploads/sites/18/2020/11/DC_Clinical-value-of-multi-parametric-ultrasound-and-MRI-US-fusion-guided-biopsy-for-prostate-cancer-detection-and-visualization.pdf) right now, and it was possible to record videos from the US device. We got our biopsy videos from the dates of 23.11.2022 and 01.12.2022, when we had our OR visits. 
+At the beginning of the project, we had two OR visits at the Department of Urology in Klinikum rechts der Isar der TUM. We met with Dr. Jahnen as a group, observed the prostate biopsy surgery procedure, asked our questions, and asked for video recordings during the surgery. He said they are using [Canon Medical’s MRI/US fusion-guided biopsy set-up](https://at.medical.canon/wp-content/uploads/sites/18/2020/11/DC_Clinical-value-of-multi-parametric-ultrasound-and-MRI-US-fusion-guided-biopsy-for-prostate-cancer-detection-and-visualization.pdf) right now, and it was possible to record videos from the US device. We got our biopsy videos from the dates of 23.11.2022 and 01.12.2022 when we had our OR visits. 
 
-During our visits, Dr. Jahnen said that he did not need to see the computed needle tip on the screen, since he knows where the needle will reach to by experience. Shooting the targeted region is not a hard job for an experienced doctor. However, he said this information was needed for documentation purposes. Moreover, it can be used for training the new doctors later. 
+During our visits, Dr. Jahnen said that he did not need to see the computed needle tip on the screen, since he knows where the needle will reach to by experience. Shooting the targeted region is not a hard job for an experienced doctor. However, he said this information was needed for documentation purposes. Moreover, it can be used for training new doctors later. 
 
 ## Clinical Workflow 
 
-In the pre-operative procedure, MRI images are loaded to the US device.
+In the pre-operative procedure, MRI images are loaded into the US device.
 Regions of interest (ROI) are marked manually by the doctor. At the beginning of the 
 surgery, 3D-US volume is created by sweeping the transrectal ultrasound
 (TRUS). This 3D-US volume is needed for documentation purposes. Then, MRI
@@ -42,8 +42,7 @@ and TRUS images are registered automatically by the US device.
     <img src="figures/clinical_workflow_1.png" width="75%">
 </p>
 
-MRI and US images are fused to see the ROIs in the TRUS images. Fusion 
-guided biopsies are taken from the patient. The assistant is waiting 
+MRI and US images are fused to see the ROIs in the TRUS images. Fusion-guided biopsies are taken from the patient. The assistant is waiting 
 for the biopsies, and then marking the needle tips for each case. The 
 marked tip coordinates are saved for documentation. 
 *Our project is restricted to the needle tip localization in this step.*
