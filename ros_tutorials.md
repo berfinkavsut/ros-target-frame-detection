@@ -75,7 +75,7 @@ roscpp = c++ client library
     ```
     
 
-![Untitled](ROS%20Tutorials%20a8ebd9c0b32d47f7b080f912eb2aa2ef/Untitled.png)
+![ros_tutorials](figures/ros_tutorials.png)
 
 **→ How to write publisher and subscriber?** 
 
